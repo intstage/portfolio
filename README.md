@@ -5,8 +5,8 @@
 
 [![Email](https://img.shields.io/badge/Email-job.tpk@yandex.ru-red?style=for-the-badge&logo=gmail)](mailto:job.tpk@yandex.ru)
 [![Telegram](https://img.shields.io/badge/Telegram-@AleksandrChernetsov-blue?style=for-the-badge&logo=telegram)](https://t.me/AleksandrChernetsov)
-[![Location](https://img.shields.io/badge/Location-Санкт--Петербург-green?style=for-the-badge&logo=map-marker)]()
-
+[![HeadHunter](https://img.shields.io/badge/HeadHunter-Резюме-red?style=for-the-badge)](https://hh.ru/resume/9a899322ff108c2d2e0039ed1f757566336b4b)
+[![Location](https://img.shields.io/badge/Location-СПб-green?style=for-the-badge&logo=map-marker)]()
 ---
 
 ## 🎯 Обо мне
