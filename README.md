@@ -15,6 +15,7 @@
 
 За плечами:
 - ✅ **557 часов** практики в Яндекс Практикуме
+- ✅ Сейчас — аналитик в B2C-туризме: сквозная аналитика, NPS, продуктовые отчёты в Telegram
 - ✅ Реальные проекты с дашбордами и аналитикой
 - ✅ Глубокое понимание бизнес-процессов изнутри
 
@@ -45,14 +46,35 @@
 ![Make](https://img.shields.io/badge/Make-000000?style=for-the-badge&logo=make)
 ![Airflow](https://img.shields.io/badge/Apache_Airflow-017CEE?style=for-the-badge&logo=apache-airflow)
 
+### Веб-аналитика & CRM-маркетинг
+![Яндекс Метрика](https://img.shields.io/badge/Яндекс_Метрика-FF0000?style=for-the-badge&logo=yandex)
+![Google Apps Script](https://img.shields.io/badge/Apps_Script-4285F4?style=for-the-badge&logo=google)
+![Telegram](https://img.shields.io/badge/Telegram_Mini_Apps-26A5E4?style=for-the-badge&logo=telegram)
+![Mindbox](https://img.shields.io/badge/Mindbox-5B2D90?style=for-the-badge)
+
 ### CRM & Инструменты
 ![Bitrix24](https://img.shields.io/badge/Bitrix24-00AEEF?style=for-the-badge&logo=bitrix24)
 ![Kaiten](https://img.shields.io/badge/Kaiten-FF6B35?style=for-the-badge)
 ![Excel](https://img.shields.io/badge/Excel-217346?style=for-the-badge&logo=microsoft-excel)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git)
 
 ---
 
 ## 💼 Ключевые проекты
+
+### 🚢 Текущая работа: аналитика туроператора речных круизов (2026)
+> Компания и данные не раскрываются по NDA. Подробные обезличенные кейсы — в папке [projects](projects/).
+
+| Кейс | Суть | Стек |
+|---|---|---|
+| [Сквозная аналитика заявок](projects/01-lead-analytics/) | CRM + Метрика + бронирования → ежедневный отчёт в Telegram Mini App, 60+ релизов | `Apps Script` `Bitrix24 API` `Метрика API` `SQL` |
+| [NPS и отзывы](projects/02-nps-reviews/) | NPS по судну и рейсу, алерты о критике, разделение ПДн и аналитики | `Apps Script` `Яндекс Формы` `Telegram Bot API` |
+| [Продуктовая аналитика](projects/03-product-analytics/) | Ранний сигнал о слабо продающихся рейсах, сравнение с прошлым годом | `SQL` `Superset API` |
+| [Панель мероприятий](projects/04-events-panel/) | Воронка «регистрация → бронь» для вебинаров и экскурсий | `Apps Script` `Bitrix24` |
+| [Единая email-база](projects/05-crm-email-base/) | Аудит согласий (152-ФЗ), архитектура базы, сегменты, механика возврата | `Mindbox` `DashaMail` |
+| [«Штаб аналитики»](projects/06-analytics-hq/) | Git, словарь метрик, pre-commit защита от утечки ПДн и ключей | `Git` `Python` |
+
+---
 
 ### 📈 BI-дашборд для коммерческого отдела (Кайтен Софтвер)
 **Проблема:** Руководство не видело ключевые метрики в реальном времени
@@ -107,7 +129,6 @@
 ### 🎓 Образование
 - **Яндекс Практикум** — Аналитик данных расширенный
   - 557 часов практики
-  - Диплом № 2026-17023-003
   
 - **АНО ДПО «Академия Пять призм»** — Коучинг международного уровня 
 
@@ -120,7 +141,7 @@
 ### 📝 Рекомендации
 > *"Аналитические дашборды отличались структурированностью и были востребованы при принятии управленческих решений"*
 
-**Сергей Былинкин** — Руководитель группы, ООО «Кайтен Софтвер»
+**Руководитель группы**, ООО «Кайтен Софтвер» — контакт для рекомендации по запросу
 
 ---
 
@@ -133,6 +154,8 @@
 4. **Визуализация данных в DataLens/Superset**
 
 ### Реальные кейсы
+- [Обезличенные кейсы текущей работы](projects/)
+- [Пет-проект: торговый бот TON](projects/07-ton-trading-bot/)
 - Дашборды для коммерческих отделов
 - Автоматизация отчетности
 - Интеграции CRM-систем
@@ -162,6 +185,7 @@
 - ✅ Настройка workflows в n8n, Make
 - ✅ Интеграции через REST API
 - ✅ ETL-процессы
+- ✅ Telegram-боты и Mini App как интерфейс отчётов
 
 ### Soft Skills
 - ✅ Понимание бизнес-процессов
@@ -177,7 +201,6 @@
 
 - 📧 **Email:** [job.tpk@yandex.ru](mailto:job.tpk@yandex.ru)
 - 💬 **Telegram:** [@AleksandrChernetsov](https://t.me/AleksandrChernetsov)
-- 📱 **Телефон:** +7 (909) 071-60-85
 - 📍 **Локация:** Санкт-Петербург (готов к удаленной работе)
 
 ---
@@ -191,4 +214,4 @@
 
 ---
 
-*Последнее обновление: Июнь 2026*
+*Последнее обновление: Октябрь 2026*
