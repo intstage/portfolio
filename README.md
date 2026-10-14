@@ -67,12 +67,16 @@
 
 ![Архитектура аналитики](assets/05-architecture.png)
 
+<p align="center"><img src="assets/product-demo.gif" width="300" alt="Отчёт «Продукт» в Telegram Mini App"></p>
+
 <table><tr>
 <td><a href="projects/01-lead-analytics/"><img src="assets/01-leads.png" alt="Сквозная аналитика заявок"></a></td>
 <td><a href="projects/03-product-analytics/"><img src="assets/03-product.png" alt="Продуктовая аналитика"></a></td>
 </tr><tr>
 <td><a href="projects/02-nps-reviews/"><img src="assets/02-nps.png" alt="NPS и отзывы"></a></td>
 <td><a href="projects/04-events-panel/"><img src="assets/04-events.png" alt="Панель мероприятий"></a></td>
+</tr><tr>
+<td colspan="2"><a href="projects/05-crm-email-base/"><img src="assets/06-email-base.png" alt="Единая email-база"></a></td>
 </tr></table>
 
 *Скриншоты — макеты интерфейсов на синтетических данных.*
