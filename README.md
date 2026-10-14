@@ -65,6 +65,18 @@
 ### 🚢 Текущая работа: аналитика туроператора речных круизов (2026)
 > Компания и данные не раскрываются по NDA. Подробные обезличенные кейсы — в папке [projects](projects/).
 
+![Архитектура аналитики](assets/05-architecture.png)
+
+<table><tr>
+<td><a href="projects/01-lead-analytics/"><img src="assets/01-leads.png" alt="Сквозная аналитика заявок"></a></td>
+<td><a href="projects/03-product-analytics/"><img src="assets/03-product.png" alt="Продуктовая аналитика"></a></td>
+</tr><tr>
+<td><a href="projects/02-nps-reviews/"><img src="assets/02-nps.png" alt="NPS и отзывы"></a></td>
+<td><a href="projects/04-events-panel/"><img src="assets/04-events.png" alt="Панель мероприятий"></a></td>
+</tr></table>
+
+*Скриншоты — макеты интерфейсов на синтетических данных.*
+
 | Кейс | Суть | Стек |
 |---|---|---|
 | [Сквозная аналитика заявок](projects/01-lead-analytics/) | CRM + Метрика + бронирования → ежедневный отчёт в Telegram Mini App, 60+ релизов | `Apps Script` `Bitrix24 API` `Метрика API` `SQL` |
