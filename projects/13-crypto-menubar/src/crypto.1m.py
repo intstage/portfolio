@@ -148,10 +148,11 @@ def main():
         print(f"{mark}{name}: {money(usd * to[currency], currency)}  {arrow(pct)} {ru_num(abs(pct))}% | {action}")
         print(f"--{money(usd * to[other], other)}  ·  24ч {arrow(pct)} {ru_num(abs(pct))}% | color={color}")
     print("---")
-    print(f"Валюта: {CURRENCIES[currency][0]}")
-    for code, (symbol, title) in CURRENCIES.items():
-        mark = "✓ " if code == currency else "    "
-        print(f'--{mark}{title} {symbol} | bash="{SELF}" param1=currency param2={code} terminal=false refresh=true')
+    # у пункта без действия SwiftBar гасит и его подменю, поэтому клик сразу переключает валюту
+    print(
+        f"Валюта: {CURRENCIES[currency][0]} → {CURRENCIES[other][0]} | "
+        f'bash="{SELF}" param1=currency param2={other} terminal=false refresh=true'
+    )
     print(f'Открыть Walt | bash="{OPEN_WALT}" terminal=false')
     print("Обновить | refresh=true")
     print(f"USDT {ru_num(rate)} ₽ · Bybit + CoinGecko, {datetime.now():%H:%M:%S} | size=11 color=gray")
