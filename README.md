@@ -180,6 +180,7 @@
   - [Облако из нескольких Google Дисков](projects/10-cloud-pool/) — rclone, шифрование, решения по замерам
   - [Clawdy](projects/11-ai-companion/) — голосовой ИИ-компаньон для Mac (Claude, MCP)
   - [WatchPay](projects/12-watch-pay/) — прототип оплаты Apple Watch по Bluetooth
+  - [Курс криптовалют в строке меню](projects/13-crypto-menubar/) — виджет для Mac, совпадающий с кошельком
 - Дашборды для коммерческих отделов
 - Автоматизация отчетности
 - Интеграции CRM-систем
