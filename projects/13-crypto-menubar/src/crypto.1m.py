@@ -14,6 +14,9 @@ from datetime import datetime
 # монета → тикер к USDT (Bybit пишет слитно, OKX через дефис)
 COINS = {"Gram": "GRAM", "Bitcoin": "BTC", "Ethereum": "ETH"}
 DEFAULT_COIN = "Gram"
+# валюта → (символ, название в меню)
+CURRENCIES = {"RUB": ("₽", "Рубли"), "USD": ("$", "Доллары")}
+DEFAULT_CURRENCY = "RUB"
 
 BYBIT_URL = "https://api.bybit.com/v5/market/tickers?category=spot&symbol={}USDT"
 OKX_URL = "https://www.okx.com/api/v5/market/ticker?instId={}-USDT"
@@ -21,6 +24,7 @@ USDT_RUB_URL = "https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_curr
 SELF = os.path.abspath(__file__)
 OPEN_WALT = os.path.expanduser("~/Library/Application Support/SwiftBar/open-walt.sh")
 SELECTED_FILE = os.path.expanduser("~/Library/Application Support/SwiftBar/crypto-selected.txt")
+CURRENCY_FILE = os.path.expanduser("~/Library/Application Support/SwiftBar/crypto-currency.txt")
 RATE_CACHE = os.path.expanduser("~/Library/Caches/swiftbar-gram-usdt-rub.txt")
 TIMEOUT_SEC = 8
 UP_COLOR = "#34C759"
@@ -67,17 +71,31 @@ def usdt_rub():
     return rate
 
 
-def read_selected():
+def read_choice(path, allowed, default):
     try:
-        with open(SELECTED_FILE) as f:
-            name = f.read().strip()
+        with open(path) as f:
+            value = f.read().strip()
     except OSError:
-        return DEFAULT_COIN
-    return name if name in COINS else DEFAULT_COIN
+        return default
+    return value if value in allowed else default
 
 
 def ru_num(value, digits=2):
     return f"{value:,.{digits}f}".replace(",", " ").replace(".", ",")
+
+
+def money(value, currency, compact=False):
+    # compact — для строки меню: у крупных цен без копеек, рубли без знака ₽
+    if compact and value >= BIG_PRICE:
+        digits = 0
+    elif currency == "USD" and value < 10:
+        digits = 3
+    else:
+        digits = 2
+    text = ru_num(value, digits)
+    if currency == "USD":
+        return f"${text}"
+    return text if compact else f"{text} ₽"
 
 
 def arrow(pct):
@@ -85,10 +103,15 @@ def arrow(pct):
 
 
 def main():
-    # клик по монете в меню запускает плагин с аргументами: select <монета>
-    if len(sys.argv) == 3 and sys.argv[1] == "select" and sys.argv[2] in COINS:
-        with open(SELECTED_FILE, "w") as f:
-            f.write(sys.argv[2])
+    # клики в меню запускают плагин с аргументами: select <монета> или currency <валюта>
+    if len(sys.argv) == 3:
+        command, value = sys.argv[1:]
+        if command == "select" and value in COINS:
+            with open(SELECTED_FILE, "w") as f:
+                f.write(value)
+        elif command == "currency" and value in CURRENCIES:
+            with open(CURRENCY_FILE, "w") as f:
+                f.write(value)
         return
 
     try:
@@ -100,16 +123,18 @@ def main():
         print("Обновить | refresh=true")
         return
 
-    selected = read_selected()
+    selected = read_choice(SELECTED_FILE, COINS, DEFAULT_COIN)
+    currency = read_choice(CURRENCY_FILE, CURRENCIES, DEFAULT_CURRENCY)
+    other = "USD" if currency == "RUB" else "RUB"
+    to = {"RUB": rate, "USD": 1.0}  # множитель из USDT в валюту
     quotes = {name: coin_quote(ticker) for name, ticker in COINS.items()}
 
     quote, _ = quotes[selected]
     if quote is None:
         print("—")
     else:
-        rub = quote[0] * rate
         # левый клик по цифре открывает Walt, правый — это меню
-        print(f'{ru_num(rub, 0 if rub >= BIG_PRICE else 2)} | bash="{OPEN_WALT}" terminal=false')
+        print(f'{money(quote[0] * to[currency], currency, compact=True)} | bash="{OPEN_WALT}" terminal=false')
     print("---")
     for name, (q, err) in quotes.items():
         mark = "✓ " if name == selected else "    "
@@ -120,9 +145,13 @@ def main():
             continue
         usd, pct = q
         color = UP_COLOR if pct >= 0 else DOWN_COLOR
-        print(f"{mark}{name}: {ru_num(usd * rate)} ₽  {arrow(pct)} {ru_num(abs(pct))}% | {action}")
-        print(f"--${ru_num(usd, 3 if usd < 10 else 2)}  ·  24ч {arrow(pct)} {ru_num(abs(pct))}% | color={color}")
+        print(f"{mark}{name}: {money(usd * to[currency], currency)}  {arrow(pct)} {ru_num(abs(pct))}% | {action}")
+        print(f"--{money(usd * to[other], other)}  ·  24ч {arrow(pct)} {ru_num(abs(pct))}% | color={color}")
     print("---")
+    print(f"Валюта: {CURRENCIES[currency][0]}")
+    for code, (symbol, title) in CURRENCIES.items():
+        mark = "✓ " if code == currency else "    "
+        print(f'--{mark}{title} {symbol} | bash="{SELF}" param1=currency param2={code} terminal=false refresh=true')
     print(f'Открыть Walt | bash="{OPEN_WALT}" terminal=false')
     print("Обновить | refresh=true")
     print(f"USDT {ru_num(rate)} ₽ · Bybit + CoinGecko, {datetime.now():%H:%M:%S} | size=11 color=gray")
