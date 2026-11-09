@@ -12,7 +12,7 @@ import urllib.request
 from datetime import datetime
 
 # монета → тикер к USDT (Bybit пишет слитно, OKX через дефис)
-COINS = {"Gram": "GRAM", "Bitcoin": "BTC", "Ethereum": "ETH"}
+COINS = {"Gram": "GRAM", "Bitcoin": "BTC", "Ethereum": "ETH", "USDT": None}  # USDT — сам курс к рублю
 DEFAULT_COIN = "Gram"
 # валюта → (символ, название в меню)
 CURRENCIES = {"RUB": ("₽", "Рубли"), "USD": ("$", "Доллары")}
@@ -20,7 +20,9 @@ DEFAULT_CURRENCY = "RUB"
 
 BYBIT_URL = "https://api.bybit.com/v5/market/tickers?category=spot&symbol={}USDT"
 OKX_URL = "https://www.okx.com/api/v5/market/ticker?instId={}-USDT"
-USDT_RUB_URL = "https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=rub"
+USDT_RUB_URL = (
+    "https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=rub&include_24hr_change=true"
+)
 SELF = os.path.abspath(__file__)
 OPEN_WALT = os.path.expanduser("~/Library/Application Support/SwiftBar/open-walt.sh")
 SELECTED_FILE = os.path.expanduser("~/Library/Application Support/SwiftBar/crypto-selected.txt")
@@ -60,15 +62,18 @@ def coin_quote(ticker):
 
 
 def usdt_rub():
+    """Курс USDT в рублях и его изменение за 24 ч, %."""
     # CoinGecko иногда отвечает 429 — тогда берём последний удачный курс из кэша
     try:
-        rate = float(fetch_json(USDT_RUB_URL)["tether"]["rub"])
+        tether = fetch_json(USDT_RUB_URL)["tether"]
+        rate, change = float(tether["rub"]), float(tether["rub_24h_change"])
     except Exception:
         with open(RATE_CACHE) as f:
-            return float(f.read())
+            parts = f.read().split()
+        return float(parts[0]), float(parts[1]) if len(parts) > 1 else 0.0
     with open(RATE_CACHE, "w") as f:
-        f.write(str(rate))
-    return rate
+        f.write(f"{rate} {change}")
+    return rate, change
 
 
 def read_choice(path, allowed, default):
@@ -113,7 +118,7 @@ def main():
         return
 
     try:
-        rate = usdt_rub()
+        rate, rate_change = usdt_rub()
     except Exception as exc:
         print("—")
         print("---")
@@ -125,7 +130,10 @@ def main():
     currency = read_choice(CURRENCY_FILE, CURRENCIES, DEFAULT_CURRENCY)
     other = "USD" if currency == "RUB" else "RUB"
     to = {"RUB": rate, "USD": 1.0}  # множитель из USDT в валюту
-    quotes = {name: coin_quote(ticker) for name, ticker in COINS.items()}
+    quotes = {
+        name: ((1.0, rate_change), None) if ticker is None else coin_quote(ticker)
+        for name, ticker in COINS.items()
+    }
 
     quote, _ = quotes[selected]
     if quote is None:
@@ -153,7 +161,7 @@ def main():
         print(f'--{mark}{title} {symbol} | bash="{SELF}" param1=currency param2={code} terminal=false refresh=true')
     print(f'Открыть Walt | bash="{OPEN_WALT}" terminal=false')
     print("Обновить | refresh=true")
-    print(f"USDT {ru_num(rate)} ₽ · Bybit + CoinGecko, {datetime.now():%H:%M:%S} | size=11 color=gray")
+    print(f"Bybit + CoinGecko, {datetime.now():%H:%M:%S} | size=11 color=gray")
 
 
 main()
