@@ -18,6 +18,7 @@ const TYPES = {
   '.md': 'text/markdown; charset=utf-8',
   '.png': 'image/png',
   '.gif': 'image/gif',
+  '.mp4': 'video/mp4',
   '.jpg': 'image/jpeg',
   '.svg': 'image/svg+xml',
 };

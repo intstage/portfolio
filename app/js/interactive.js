@@ -100,7 +100,29 @@ function mountZoom(root) {
   return () => lightbox.close();
 }
 
+// Видео в рамке телефона: запускаем явно (атрибут autoplay срабатывает не везде);
+// если телефон не даёт запустить видео — показываем GIF.
+function mountLoopVideos(root) {
+  const videos = [...root.querySelectorAll('video[data-fallback]')];
+  const useGif = (video) => {
+    if (!video.isConnected) return;
+    const image = document.createElement('img');
+    image.src = video.dataset.fallback;
+    image.alt = '';
+    image.width = video.width;
+    image.height = video.height;
+    video.replaceWith(image);
+  };
+  videos.forEach((video) => {
+    video.muted = true;
+    video.addEventListener('error', () => useGif(video), { once: true });
+    const started = video.play();
+    if (started?.catch) started.catch(() => useGif(video));
+  });
+  return () => videos.forEach((video) => video.pause());
+}
+
 export function mount(root) {
-  const cleanups = [mountChats(root), mountZoom(root)];
+  const cleanups = [mountChats(root), mountZoom(root), mountLoopVideos(root)];
   return () => cleanups.forEach((cleanup) => cleanup());
 }

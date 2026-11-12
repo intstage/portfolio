@@ -5,6 +5,15 @@ import { button, caseCard, chat, chips, discussLink, esc, flow } from './compone
 
 const GROUP_LABELS = { all: 'Все', work: 'Работа', pet: 'Пет-проекты' };
 
+// Анимация отчёта: видео без звука (GIF на части телефонов стоит на первом кадре);
+// если видео не запускается, interactive.js подменяет его на GIF из data-fallback.
+function showcaseMedia(item) {
+  const size = `width="${Number(item.width)}" height="${Number(item.height)}"`;
+  if (!item.video) return `<img src="${esc(item.image)}" alt="" loading="lazy" ${size}>`;
+  return `<video src="${esc(item.video)}" poster="${esc(item.poster ?? '')}" data-fallback="${esc(item.image)}"
+        autoplay muted loop playsinline disablepictureinpicture preload="auto" ${size}></video>`;
+}
+
 function showcase(profile, cases) {
   const item = profile.showcase;
   const related = cases.find((entry) => entry.id === item?.caseId);
@@ -17,7 +26,7 @@ function showcase(profile, cases) {
         <a class="more" href="#/cases/${esc(related.id)}">Кейс: ${esc(related.title)}</a>
       </div>
       <div class="phone" aria-hidden="true">
-        <img src="${esc(item.image)}" alt="" loading="lazy" width="${Number(item.width)}" height="${Number(item.height)}">
+        ${showcaseMedia(item)}
       </div>
     </section>`;
 }
