@@ -5,13 +5,15 @@ import { button, caseCard, chat, chips, discussLink, esc, flow } from './compone
 
 const GROUP_LABELS = { all: 'Все', work: 'Работа', pet: 'Пет-проекты' };
 
-// Анимация отчёта: видео без звука (GIF на части телефонов стоит на первом кадре);
-// если видео не запускается, interactive.js подменяет его на GIF из data-fallback.
+// Анимация отчёта: кадры проигрывает interactive.js на canvas. GIF и видео на части
+// телефонов стоят на первом кадре (настройки автовоспроизведения), кадры от них не зависят.
 function showcaseMedia(item) {
-  const size = `width="${Number(item.width)}" height="${Number(item.height)}"`;
-  if (!item.video) return `<img src="${esc(item.image)}" alt="" loading="lazy" ${size}>`;
-  return `<video src="${esc(item.video)}" poster="${esc(item.poster ?? '')}" data-fallback="${esc(item.image)}"
-        autoplay muted loop playsinline disablepictureinpicture preload="auto" ${size}></video>`;
+  if (!item.frames) {
+    return `<img src="${esc(item.image)}" alt="" loading="lazy" width="${Number(item.width)}" height="${Number(item.height)}">`;
+  }
+  const durations = item.frameDurations.map(Number).join(',');
+  return `<canvas data-frames="${esc(item.frames)}" data-durations="${durations}"
+        width="${Number(item.frameWidth)}" height="${Number(item.frameHeight)}"></canvas>`;
 }
 
 function showcase(profile, cases) {

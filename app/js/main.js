@@ -32,7 +32,8 @@ const view = document.getElementById('view');
 const tabs = document.getElementById('tabs');
 
 async function loadJson(path) {
-  const response = await fetch(path);
+  // no-cache: браузер переспрашивает сервер, изменились ли данные (хостинг разрешает хранить их неделю).
+  const response = await fetch(path, { cache: 'no-cache' });
   if (!response.ok) throw new Error(`${path}: ответ ${response.status}`);
   return response.json();
 }

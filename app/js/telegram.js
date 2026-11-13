@@ -21,6 +21,20 @@ function waitForScript() {
   });
 }
 
+// Насколько должны различаться фон страницы и фон карточек, чтобы карточки было видно.
+const MIN_SURFACE_CONTRAST = 14;
+
+const channels = (hex) => [1, 3, 5].map((start) => parseInt(String(hex).slice(start, start + 2), 16));
+
+// Тема, где карточки сливаются с фоном: стили по data-flat дают им свой тон и рамку.
+function markFlatTheme() {
+  const { bg_color: surface, secondary_bg_color: page } = webApp().themeParams ?? {};
+  if (!/^#[0-9a-f]{6}$/i.test(surface ?? '') || !/^#[0-9a-f]{6}$/i.test(page ?? '')) return;
+  const [a, b] = [channels(surface), channels(page)];
+  const distance = Math.max(...a.map((value, index) => Math.abs(value - b[index])));
+  document.documentElement.toggleAttribute('data-flat', distance < MIN_SURFACE_CONTRAST);
+}
+
 let connected = false;
 
 function connect() {
@@ -36,6 +50,8 @@ function connect() {
     console.warn('Telegram: не удалось задать цвета шапки', error);
   }
   document.documentElement.classList.add('in-telegram');
+  markFlatTheme();
+  app.onEvent?.('themeChanged', markFlatTheme);
   const startParam = app.initDataUnsafe?.start_param;
   return {
     // Имя нужно только для приветствия; подпись initData не проверяется и ни на что не влияет.

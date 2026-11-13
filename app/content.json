@@ -106,8 +106,10 @@
     ],
     "showcase": {
       "image": "assets/product-demo.gif",
-      "video": "assets/product-demo.mp4",
-      "poster": "assets/product-demo-poster.jpg",
+      "frames": "assets/product-demo",
+      "frameWidth": 320,
+      "frameHeight": 536,
+      "frameDurations": [1600, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 1660, 60, 60, 60, 60, 60, 60, 60, 60, 560, 1800, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 2260],
       "width": 645,
       "height": 1080,
       "title": "Отчёт прямо в Telegram",

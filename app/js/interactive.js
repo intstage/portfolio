@@ -100,29 +100,52 @@ function mountZoom(root) {
   return () => lightbox.close();
 }
 
-// Видео в рамке телефона: запускаем явно (атрибут autoplay срабатывает не везде);
-// если телефон не даёт запустить видео — показываем GIF.
-function mountLoopVideos(root) {
-  const videos = [...root.querySelectorAll('video[data-fallback]')];
-  const useGif = (video) => {
-    if (!video.isConnected) return;
-    const image = document.createElement('img');
-    image.src = video.dataset.fallback;
-    image.alt = '';
-    image.width = video.width;
-    image.height = video.height;
-    video.replaceWith(image);
-  };
-  videos.forEach((video) => {
-    video.muted = true;
-    video.addEventListener('error', () => useGif(video), { once: true });
-    const started = video.play();
-    if (started?.catch) started.catch(() => useGif(video));
+const frameName = (index) => `f${String(index + 1).padStart(2, '0')}.jpg`;
+
+function loadFrame(source) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error(`Кадр не загрузился: ${source}`));
+    image.src = source;
   });
-  return () => videos.forEach((video) => video.pause());
+}
+
+// Покадровая анимация на canvas: первый кадр показываем сразу, цикл — когда загрузятся все.
+function playFrames(canvas) {
+  const durations = canvas.dataset.durations.split(',').map(Number);
+  const sources = durations.map((_, index) => `${canvas.dataset.frames}/${frameName(index)}`);
+  const context = canvas.getContext('2d');
+  const draw = (image) => context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  let timer = null;
+  let stopped = false;
+
+  const showFrame = (frames, index) => {
+    if (stopped) return;
+    draw(frames[index]);
+    timer = setTimeout(() => showFrame(frames, (index + 1) % frames.length), durations[index]);
+  };
+
+  loadFrame(sources[0])
+    .then((first) => {
+      if (!stopped) draw(first);
+      return Promise.all(sources.map(loadFrame));
+    })
+    .then((frames) => showFrame(frames, 0))
+    .catch((error) => console.warn(error.message));
+
+  return () => {
+    stopped = true;
+    clearTimeout(timer);
+  };
+}
+
+function mountFramePlayers(root) {
+  const stops = [...root.querySelectorAll('canvas[data-frames]')].map(playFrames);
+  return () => stops.forEach((stop) => stop());
 }
 
 export function mount(root) {
-  const cleanups = [mountChats(root), mountZoom(root), mountLoopVideos(root)];
+  const cleanups = [mountChats(root), mountZoom(root), mountFramePlayers(root)];
   return () => cleanups.forEach((cleanup) => cleanup());
 }
