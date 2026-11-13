@@ -33,6 +33,14 @@ function showcase(profile, cases) {
     </section>`;
 }
 
+// Знак intstage: три ступени, последняя с точкой — буква «i». Цвета берутся из темы.
+const BRAND_MARK = `<svg class="brand__mark" viewBox="20 16 56 64" aria-hidden="true">
+  <rect x="24" y="57.5" width="12" height="18" rx="3" opacity="0.5"/>
+  <rect x="42" y="47.5" width="12" height="28" rx="3" opacity="0.75"/>
+  <rect x="60" y="39.5" width="12" height="36" rx="3"/>
+  <circle class="brand__dot" cx="66" cy="27.5" r="7"/>
+</svg>`;
+
 export function viewHome({ content, cases, firstName }) {
   const { profile } = content;
   const featured = profile.featured.map((id) => cases.find((item) => item.id === id)).filter(Boolean);
@@ -41,6 +49,7 @@ export function viewHome({ content, cases, firstName }) {
   return `
     <header class="hero">
       <span class="hero__mark" aria-hidden="true">${esc(profile.initials)}</span>
+      ${profile.brand ? `<p class="brand">${BRAND_MARK}<span>${esc(profile.brand)}</span></p>` : ''}
       ${firstName ? `<p class="hero__hello">Привет, ${esc(firstName)}!</p>` : ''}
       <h1 class="hero__name">${esc(profile.name)}</h1>
       <p class="hero__role">${esc(profile.role)}</p>
