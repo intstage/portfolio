@@ -48,7 +48,7 @@ test('рендерит таблицу', () => {
 });
 
 test('пропускает одиночный <img>, остальной HTML экранирует', () => {
-  assert.match(renderMarkdown('<img src="a.gif" width="320" alt="демо">'), /<img src="a.gif" alt="демо" loading="lazy" style="max-width:320px">/);
+  assert.match(renderMarkdown('<img src="a.gif" width="320" alt="демо">'), /<img src="a.gif" alt="демо" loading="lazy" style="max-width:min\(100%,320px\)">/);
   assert.equal(renderMarkdown('<script>alert(1)</script>'), '<p>&lt;script&gt;alert(1)&lt;/script&gt;</p>');
 });
 

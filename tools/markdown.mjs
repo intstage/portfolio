@@ -30,7 +30,7 @@ export const escapeHtml = (text) => String(text).replace(/[&<>"]/g, (ch) => ESCA
 const safeUrl = (url) => (SAFE_URL.test(url) ? url : '#');
 
 function imageTag(src, alt, width, ctx) {
-  const widthAttr = /^\d+$/.test(width ?? '') ? ` style="max-width:${width}px"` : '';
+  const widthAttr = /^\d+$/.test(width ?? '') ? ` style="max-width:min(100%,${width}px)"` : '';
   const url = safeUrl(ctx.resolveSrc(src));
   const size = ctx.imageSize(url);
   const sizeAttrs = size ? ` width="${size.width}" height="${size.height}"` : '';
