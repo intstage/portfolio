@@ -97,6 +97,17 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 
 .state { padding: var(--space-6) 0; text-align: center; color: var(--muted); }
 
+/* Главная вписана в страницу при сборке (для поиска и мгновенного показа). По прямой ссылке
+   на раздел (#/…) её прячем и показываем «Загрузка…», пока приложение не нарисует нужный экран. */
+.prerender { display: contents; }
+.state--boot, .routed .prerender { display: none; }
+.routed .state--boot { display: block; }
+
+/* Перечень страниц внизу готовых страниц (services/, cases/). */
+.sitelinks { display: grid; gap: var(--space-3); padding: var(--space-4) 0 0; border-top: 1px solid var(--line); font-size: var(--text-sm); }
+.sitelinks h2 { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.sitelinks ul { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); }
+
 /* Шапка профиля */
 .hero {
   position: relative;

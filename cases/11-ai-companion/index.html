@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Clawdy — голосовой ИИ-компаньон для Mac — кейс, Александр Чернецов</title>
+  <meta name="description" content="Голосовой агент для Mac, MCP, защищённый канал. Стек: Swift, SwiftUI, AppKit, watchOS, Claude API, Claude Code, MCP, Speech, CryptoKit, Bonjour, xcodegen.">
+  <link rel="canonical" href="https://m.intstage.ru/cases/11-ai-companion/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="Clawdy — голосовой ИИ-компаньон для Mac — кейс, Александр Чернецов">
+  <meta property="og:description" content="Голосовой агент для Mac, MCP, защищённый канал. Стек: Swift, SwiftUI, AppKit, watchOS, Claude API, Claude Code, MCP, Speech, CryptoKit, Bonjour, xcodegen.">
+  <meta property="og:url" content="https://m.intstage.ru/cases/11-ai-companion/">
+  <meta property="og:image" content="https://m.intstage.ru/assets/brand/bot-description-640x360.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png">
+  <link rel="stylesheet" href="../../app/styles.css">
+</head>
+<body>
+  <main id="view" class="view">
+    
+    <article class="article">
+      <p class="article__kicker">Пет-проект · 11 из 13</p>
+      <h1>Clawdy — голосовой ИИ-компаньон для Mac</h1>
+      <ul class="chips"><li>Swift</li><li>SwiftUI</li><li>AppKit</li><li>watchOS</li><li>Claude API</li><li>Claude Code</li><li>MCP</li><li>Speech</li><li>CryptoKit</li><li>Bonjour</li><li>xcodegen</li></ul>
+      
+    <figure class="flow" style="--steps:4">
+      <figcaption>Как это работает</figcaption>
+      <ol>
+      <li style="--i:0">
+        <span class="flow__dot" aria-hidden="true">1</span>
+        <strong>Голос</strong>
+        <span class="flow__note">iPhone слушает фразу</span>
+      </li>
+      <li style="--i:1">
+        <span class="flow__dot" aria-hidden="true">2</span>
+        <strong>Claude</strong>
+        <span class="flow__note">видит экран Mac</span>
+      </li>
+      <li style="--i:2">
+        <span class="flow__dot" aria-hidden="true">3</span>
+        <strong>Инструменты</strong>
+        <span class="flow__note">MCP: клик, ввод, показать</span>
+      </li>
+      <li style="--i:3">
+        <span class="flow__dot" aria-hidden="true">4</span>
+        <strong>Ответ</strong>
+        <span class="flow__note">голосом и действием</span>
+      </li></ol>
+    </figure>
+      <div class="prose"><blockquote><p>Личный прототип: старый iPhone под монитором превращается в пиксельного крабика, который видит экран Mac, отвечает голосом и умеет сам кликать.</p></blockquote>
+<h2>Что делает</h2>
+<ul><li>Зажимаешь экран iPhone и говоришь фразу; крабик видит экран Mac, отвечает голосом, показывает нужное место оранжевым курсором, а по просьбе сам кликает и печатает.</li><li>Глаза крабика следят за мышью, настроение отражается на лице; на Apple Watch — то же лицо и кнопка для надиктовки.</li><li>Можно спросить и прямо с Mac, из строки меню.</li></ul>
+<h2>Как устроено</h2>
+<ul><li><strong>Mac:</strong> приложение в строке меню. Два режима обращения к Claude: через Claude Code по подписке (инструменты — скриншот, клик, ввод, «показать», «сказать» — отдаёт встроенный MCP-сервер, который слушает только локальный адрес и требует токен) или через Claude API с инструментами управления компьютером.</li><li><strong>iPhone:</strong> распознавание речи на русском, озвучка, сканер QR для связи с Mac, мост к часам. <strong>Apple Watch:</strong> зеркало крабика и кнопка микрофона.</li><li><strong>Защищённый канал Mac ↔ iPhone:</strong> поиск по Bonjour в локальной сети, секрет 256 бит передаётся только QR-кодом, проверка HMAC по случайному вызову, шифрование ChaCha20-Poly1305 с ключами по направлениям (HKDF); повтор или подмена записи рвут соединение. Ключи хранятся в связке ключей и на телефон не уходят.</li><li><strong>Безопасность действий:</strong> перед необратимыми действиями (отправка, удаление, покупки, пароли, системные настройки) крабик спрашивает подтверждение; текст с экрана считается данными, а не командами; курсор и реплики не попадают в скриншоты; есть горячая клавиша «стоп».</li></ul>
+<h2>Чему научился</h2>
+<p>Проектировать инструменты для ИИ-агента (MCP), ограничивать его права и защищать канал между устройствами без облачного посредника.</p></div>
+      <footer class="article__cta">
+        <p>Похожая задача?</p>
+        <a class="button button--primary" href="https://t.me/intstagebot?start=case_11-ai-companion" target="_blank" rel="noopener">Обсудить в Telegram</a>
+      </footer>
+    </article>
+    <a class="next-case" href="../../cases/12-watch-pay/">
+      <span>Следующий кейс</span>
+      <strong>WatchPay — оплата Apple Watch по Bluetooth</strong>
+    </a>
+    
+    <nav class="sitelinks" aria-label="Все страницы">
+      <h2>Услуги</h2>
+      <ul><li><a href="../../services/analytics/">Аналитика и BI</a></li><li><a href="../../services/automation/">Автоматизация и боты</a></li><li><a href="../../services/ai/">ИИ-агенты и сервер</a></li><li><a href="../../services/consulting/">Консультация</a></li></ul>
+      <h2>Кейсы</h2>
+      <ul><li><a href="../../cases/01-lead-analytics/">Сквозная аналитика заявок в Telegram Mini App</a></li><li><a href="../../cases/02-nps-reviews/">NPS и отзывы туристов</a></li><li><a href="../../cases/03-product-analytics/">Продуктовая аналитика рейсов</a></li><li><a href="../../cases/04-events-panel/">Панель вебинаров и офлайн-мероприятий</a></li><li><a href="../../cases/05-crm-email-base/">Единая email-база и стратегия рассылок</a></li><li><a href="../../cases/06-analytics-hq/">«Штаб аналитики»: порядок в данных и процессах</a></li><li><a href="../../cases/07-ton-trading-bot/">Торговый бот для TON</a></li><li><a href="../../cases/08-decision-support/">Поддержка решений: гипотезы, тесты, сигналы</a></li><li><a href="../../cases/09-home-server/">Домашний сервер для данных и ботов</a></li><li><a href="../../cases/10-cloud-pool/">Одно облако из нескольких бесплатных Google Дисков</a></li><li><a href="../../cases/11-ai-companion/">Clawdy — голосовой ИИ-компаньон для Mac</a></li><li><a href="../../cases/12-watch-pay/">WatchPay — оплата Apple Watch по Bluetooth</a></li><li><a href="../../cases/13-crypto-menubar/">Курс криптовалют в строке меню Mac</a></li></ul>
+    </nav>
+  </main>
+  <nav id="tabs" class="tabs" aria-label="Разделы"><a href="../../"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/><circle cx="12" cy="7" r="4"/></svg><span>Обо мне</span></a><a href="../../cases/" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><span>Кейсы</span></a><a href="../../services/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6-4.5-4.2 6.1-.7z"/></svg><span>Услуги</span></a><a href="../../#/bots"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4M9 13v2M15 13v2"/><circle cx="12" cy="3.5" r="1"/></svg><span>Боты</span></a><a href="https://t.me/intstagegroup" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg><span>Канал</span></a></nav>
+  <script type="module">
+    import { mount } from '../../app/js/interactive.js';
+    mount(document.getElementById('view'));
+  </script>
+</body>
+</html>

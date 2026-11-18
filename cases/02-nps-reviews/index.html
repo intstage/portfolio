@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>NPS и отзывы туристов — кейс, Александр Чернецов</title>
+  <meta name="description" content="NPS по судну и рейсу, алерты о критике, работа с ПДн. Стек: Google Apps Script, Google Sheets, Яндекс Формы, SQL, Telegram Bot API, Telegram Mini App.">
+  <link rel="canonical" href="https://m.intstage.ru/cases/02-nps-reviews/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="NPS и отзывы туристов — кейс, Александр Чернецов">
+  <meta property="og:description" content="NPS по судну и рейсу, алерты о критике, работа с ПДн. Стек: Google Apps Script, Google Sheets, Яндекс Формы, SQL, Telegram Bot API, Telegram Mini App.">
+  <meta property="og:url" content="https://m.intstage.ru/cases/02-nps-reviews/">
+  <meta property="og:image" content="https://m.intstage.ru/assets/02-nps.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png">
+  <link rel="stylesheet" href="../../app/styles.css">
+</head>
+<body>
+  <main id="view" class="view">
+    
+    <article class="article">
+      <p class="article__kicker">Рабочий кейс · 2 из 13</p>
+      <h1>NPS и отзывы туристов</h1>
+      <ul class="chips"><li>Google Apps Script</li><li>Google Sheets</li><li>Яндекс Формы</li><li>SQL</li><li>Telegram Bot API</li><li>Telegram Mini App</li></ul>
+      
+      <div class="prose"><blockquote><p>Компания: туроператор речных круизов. Данные клиентов в репозиторий не попадают; примеры ниже — схематичные.</p></blockquote>
+<p><img src="../../assets/02-nps.png" alt="Макет на синтетических данных" loading="lazy" width="1680" height="1600">
+<em>Интерфейс воспроизведён на синтетических данных: реальные цифры и названия не показываются.</em></p>
+<h2>Задача</h2>
+<p>Анкеты после рейса и отзывы на внешних площадках жили отдельно. Не было ответа на вопрос «на каком судне и рейсе проседает качество» и способа быстро реагировать на критику.</p>
+<h2>Решение</h2>
+<ul><li>Сбор ответов анкет и отзывов с площадок в одну модель: турист → рейс → судно → сезон. Публичные отзывы собираются раз в месяц, в том числе из раздела отзывов сообществ ВКонтакте.</li><li>Расчёт NPS по судну, рейсу и сезону с отклонением от среднего по флоту и количеством ответов (чтобы не делать выводов по 3 анкетам).</li><li><strong>Статистическая значимость:</strong> судно подсвечивается как «ниже / выше флота» только при разнице больше двух стандартных ошибок NPS; при малом числе ответов — серым.</li><li>Оценки отдельных пунктов анкеты (например, работа официантов) считаются как индекс по методике NPS, а не средний балл.</li><li>Мгновенное уведомление о критической оценке в Telegram с кнопкой «Открыть анкету»; только в будни в рабочее время.</li><li>Отчёт в Telegram Mini App, вход из браузера через Telegram Login, совместимость с Android и Windows; карточки ведут к подробным блокам, единый период отзывов на всех вкладках.</li><li>Сравнение собственной схемы на Яндекс Формах с сервисом анкет внешнего подрядчика.</li></ul>
+<h2>Работа с персональными данными (152-ФЗ)</h2>
+<ul><li>Контакты туристов отделены от аналитики: в отчёте — агрегаты и обезличенные ID, контакты — в закрытой таблице с ограниченным доступом.</li><li>Доступ к отчёту только по белому списку — общему для всех отчётов, с ролями и настройкой уведомлений.</li></ul>
+<h2>Результат</h2>
+<p>77 версий отчёта; команда видит слабые рейсы и получает сигнал о негативе в день ответа, а не в конце сезона.</p></div>
+      <footer class="article__cta">
+        <p>Похожая задача?</p>
+        <a class="button button--primary" href="https://t.me/intstagebot?start=case_02-nps-reviews" target="_blank" rel="noopener">Обсудить в Telegram</a>
+      </footer>
+    </article>
+    <a class="next-case" href="../../cases/03-product-analytics/">
+      <span>Следующий кейс</span>
+      <strong>Продуктовая аналитика рейсов</strong>
+    </a>
+    
+    <nav class="sitelinks" aria-label="Все страницы">
+      <h2>Услуги</h2>
+      <ul><li><a href="../../services/analytics/">Аналитика и BI</a></li><li><a href="../../services/automation/">Автоматизация и боты</a></li><li><a href="../../services/ai/">ИИ-агенты и сервер</a></li><li><a href="../../services/consulting/">Консультация</a></li></ul>
+      <h2>Кейсы</h2>
+      <ul><li><a href="../../cases/01-lead-analytics/">Сквозная аналитика заявок в Telegram Mini App</a></li><li><a href="../../cases/02-nps-reviews/">NPS и отзывы туристов</a></li><li><a href="../../cases/03-product-analytics/">Продуктовая аналитика рейсов</a></li><li><a href="../../cases/04-events-panel/">Панель вебинаров и офлайн-мероприятий</a></li><li><a href="../../cases/05-crm-email-base/">Единая email-база и стратегия рассылок</a></li><li><a href="../../cases/06-analytics-hq/">«Штаб аналитики»: порядок в данных и процессах</a></li><li><a href="../../cases/07-ton-trading-bot/">Торговый бот для TON</a></li><li><a href="../../cases/08-decision-support/">Поддержка решений: гипотезы, тесты, сигналы</a></li><li><a href="../../cases/09-home-server/">Домашний сервер для данных и ботов</a></li><li><a href="../../cases/10-cloud-pool/">Одно облако из нескольких бесплатных Google Дисков</a></li><li><a href="../../cases/11-ai-companion/">Clawdy — голосовой ИИ-компаньон для Mac</a></li><li><a href="../../cases/12-watch-pay/">WatchPay — оплата Apple Watch по Bluetooth</a></li><li><a href="../../cases/13-crypto-menubar/">Курс криптовалют в строке меню Mac</a></li></ul>
+    </nav>
+  </main>
+  <nav id="tabs" class="tabs" aria-label="Разделы"><a href="../../"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/><circle cx="12" cy="7" r="4"/></svg><span>Обо мне</span></a><a href="../../cases/" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><span>Кейсы</span></a><a href="../../services/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6-4.5-4.2 6.1-.7z"/></svg><span>Услуги</span></a><a href="../../#/bots"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4M9 13v2M15 13v2"/><circle cx="12" cy="3.5" r="1"/></svg><span>Боты</span></a><a href="https://t.me/intstagegroup" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg><span>Канал</span></a></nav>
+  <script type="module">
+    import { mount } from '../../app/js/interactive.js';
+    mount(document.getElementById('view'));
+  </script>
+</body>
+</html>

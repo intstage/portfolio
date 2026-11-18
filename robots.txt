@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://m.intstage.ru/sitemap.xml

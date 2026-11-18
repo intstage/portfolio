@@ -1,12 +1,14 @@
 #!/usr/bin/env node
-// Собирает app/data.json для мини-приложения из кейсов (projects/*/README.md).
+// Собирает app/data.json для мини-приложения из кейсов (projects/*/README.md)
+// и готовые страницы для поиска: services/, cases/, главную в index.html, sitemap.xml, robots.txt.
 // Запуск: node tools/build.mjs
 
 import { readFileSync } from 'node:fs';
-import { readFile, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, posix, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderMarkdown } from './markdown.mjs';
+import { GENERATED_DIRS, ROBOTS, buildPages, buildSitemap, fillIndex, renderPage } from './pages.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const REPO_URL = 'https://github.com/intstage/portfolio/blob/main/';
@@ -115,6 +117,24 @@ async function main() {
   const target = join(ROOT, 'app', 'data.json');
   await writeFile(target, `${JSON.stringify({ cases }, null, 1)}\n`);
   process.stdout.write(`app/data.json: кейсов ${cases.length}\n`);
+  const pages = await writeSite(cases);
+  process.stdout.write(`страниц для поиска: ${pages + 1} (с главной), sitemap.xml, robots.txt\n`);
+}
+
+// Папки готовых страниц пересоздаются целиком: страница удалённого кейса не остаётся на сайте.
+async function writeSite(cases) {
+  const content = JSON.parse(await readFile(join(ROOT, 'app', 'content.json'), 'utf8'));
+  const pages = buildPages(content, cases);
+  await Promise.all(GENERATED_DIRS.map((dir) => rm(join(ROOT, dir), { recursive: true, force: true })));
+  for (const page of pages) {
+    await mkdir(join(ROOT, page.path), { recursive: true });
+    await writeFile(join(ROOT, page.path, 'index.html'), renderPage(page, content, cases));
+  }
+  const indexFile = join(ROOT, 'index.html');
+  await writeFile(indexFile, fillIndex(await readFile(indexFile, 'utf8'), content, cases));
+  await writeFile(join(ROOT, 'sitemap.xml'), buildSitemap(pages));
+  await writeFile(join(ROOT, 'robots.txt'), ROBOTS);
+  return pages.length;
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

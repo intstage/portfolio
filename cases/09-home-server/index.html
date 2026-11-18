@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Домашний сервер для данных и ботов — кейс, Александр Чернецов</title>
+  <meta name="description" content="Сервер 24/7, Tailscale, Syncthing, бэкапы, ИИ-агент с правилами. Стек: Windows, PowerShell, OpenSSH, Tailscale, Syncthing, launchd, Планировщик заданий,…">
+  <link rel="canonical" href="https://m.intstage.ru/cases/09-home-server/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="Домашний сервер для данных и ботов — кейс, Александр Чернецов">
+  <meta property="og:description" content="Сервер 24/7, Tailscale, Syncthing, бэкапы, ИИ-агент с правилами. Стек: Windows, PowerShell, OpenSSH, Tailscale, Syncthing, launchd, Планировщик заданий,…">
+  <meta property="og:url" content="https://m.intstage.ru/cases/09-home-server/">
+  <meta property="og:image" content="https://m.intstage.ru/assets/brand/bot-description-640x360.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../../assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/brand/apple-touch-icon.png">
+  <link rel="stylesheet" href="../../app/styles.css">
+</head>
+<body>
+  <main id="view" class="view">
+    
+    <article class="article">
+      <p class="article__kicker">Пет-проект · 9 из 13</p>
+      <h1>Домашний сервер для данных и ботов</h1>
+      <ul class="chips"><li>Windows</li><li>PowerShell</li><li>OpenSSH</li><li>Tailscale</li><li>Syncthing</li><li>launchd</li><li>Планировщик заданий</li><li>Node.js</li><li>Python</li><li>Claude Code</li></ul>
+      
+    <figure class="flow" style="--steps:4">
+      <figcaption>Как это работает</figcaption>
+      <ol>
+      <li style="--i:0">
+        <span class="flow__dot" aria-hidden="true">1</span>
+        <strong>Mac</strong>
+        <span class="flow__note">рабочая папка</span>
+      </li>
+      <li style="--i:1">
+        <span class="flow__dot" aria-hidden="true">2</span>
+        <strong>Syncthing</strong>
+        <span class="flow__note">синхронизация в обе стороны</span>
+      </li>
+      <li style="--i:2">
+        <span class="flow__dot" aria-hidden="true">3</span>
+        <strong>Сервер 24/7</strong>
+        <span class="flow__note">боты и задачи по расписанию</span>
+      </li>
+      <li style="--i:3">
+        <span class="flow__dot" aria-hidden="true">4</span>
+        <strong>Бэкап</strong>
+        <span class="flow__note">14 последних архивов</span>
+      </li></ol>
+    </figure>
+      <div class="prose"><blockquote><p>Личный проект: старый ноутбук на Windows работает как сервер 24/7. Адреса, имена машин и учётные записи не раскрываются.</p></blockquote>
+<h2>Задача</h2>
+<p>Боты и ночные задачи не должны зависеть от того, открыт ли мой Mac. Рабочие файлы нужны и на компьютере, и на сервере, и с телефона, а без бэкапа одна ошибка синхронизации может стереть их сразу на всех машинах.</p>
+<h2>Решение</h2>
+<ul><li><strong>Сервер:</strong> ноутбук всегда от сети, работает с закрытой крышкой, сон отключён, после перезагрузки сам входит в систему и блокирует экран.</li><li><strong>Удалённый доступ:</strong> SSH только по ключам, частная сеть Tailscale (mesh VPN) между Mac, сервером и телефоном, запасной путь — программа удалённого рабочего стола.</li><li><strong>Синхронизация:</strong> рабочая папка Mac ⇄ сервер через Syncthing в обе стороны; зависимости (<code>node_modules</code>, venv, кэши) не синхронизируются, у каждой машины свои; конфликты сохраняются рядом, а не перезаписывают файл.</li><li><strong>Бэкапы:</strong> каждый вечер Mac (launchd) кладёт архив рабочей папки на диск данных сервера, хранятся 14 последних — страховка от ошибок синхронизации.</li><li><strong>Задачи по расписанию:</strong> торговый бот (<a href="../../cases/07-ton-trading-bot/">кейс 07</a>), ежедневная публикация данных в GitHub, сторож VPN-подключения, медиасервер.</li><li><strong>ИИ-агент на сервере:</strong> Claude Desktop с удалённым управлением с iPhone; общие инструкции для агента лежат в синхронизируемой папке, поэтому проект, начатый на одной машине, можно продолжить на любой другой.</li><li><strong>Правила безопасности для агента:</strong> смотреть логи и статусы — можно, любое изменение — только после подтверждения; удаление, права, SSH, VPN и всё, что связано с деньгами, — отдельным подтверждением.</li><li><strong>Обходы ограничений сети:</strong> пакеты Python, недоступные с сервера, скачиваются на Mac под Windows-платформу и ставятся офлайн.</li></ul>
+<h2>Результат</h2>
+<p>Боты и выгрузки работают круглосуточно без участия Mac, рабочая папка одинакова на всех машинах и каждый день попадает в архив, а управлять сервером можно с телефона.</p></div>
+      <footer class="article__cta">
+        <p>Похожая задача?</p>
+        <a class="button button--primary" href="https://t.me/intstagebot?start=case_09-home-server" target="_blank" rel="noopener">Обсудить в Telegram</a>
+      </footer>
+    </article>
+    <a class="next-case" href="../../cases/10-cloud-pool/">
+      <span>Следующий кейс</span>
+      <strong>Одно облако из нескольких бесплатных Google Дисков</strong>
+    </a>
+    
+    <nav class="sitelinks" aria-label="Все страницы">
+      <h2>Услуги</h2>
+      <ul><li><a href="../../services/analytics/">Аналитика и BI</a></li><li><a href="../../services/automation/">Автоматизация и боты</a></li><li><a href="../../services/ai/">ИИ-агенты и сервер</a></li><li><a href="../../services/consulting/">Консультация</a></li></ul>
+      <h2>Кейсы</h2>
+      <ul><li><a href="../../cases/01-lead-analytics/">Сквозная аналитика заявок в Telegram Mini App</a></li><li><a href="../../cases/02-nps-reviews/">NPS и отзывы туристов</a></li><li><a href="../../cases/03-product-analytics/">Продуктовая аналитика рейсов</a></li><li><a href="../../cases/04-events-panel/">Панель вебинаров и офлайн-мероприятий</a></li><li><a href="../../cases/05-crm-email-base/">Единая email-база и стратегия рассылок</a></li><li><a href="../../cases/06-analytics-hq/">«Штаб аналитики»: порядок в данных и процессах</a></li><li><a href="../../cases/07-ton-trading-bot/">Торговый бот для TON</a></li><li><a href="../../cases/08-decision-support/">Поддержка решений: гипотезы, тесты, сигналы</a></li><li><a href="../../cases/09-home-server/">Домашний сервер для данных и ботов</a></li><li><a href="../../cases/10-cloud-pool/">Одно облако из нескольких бесплатных Google Дисков</a></li><li><a href="../../cases/11-ai-companion/">Clawdy — голосовой ИИ-компаньон для Mac</a></li><li><a href="../../cases/12-watch-pay/">WatchPay — оплата Apple Watch по Bluetooth</a></li><li><a href="../../cases/13-crypto-menubar/">Курс криптовалют в строке меню Mac</a></li></ul>
+    </nav>
+  </main>
+  <nav id="tabs" class="tabs" aria-label="Разделы"><a href="../../"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/><circle cx="12" cy="7" r="4"/></svg><span>Обо мне</span></a><a href="../../cases/" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><span>Кейсы</span></a><a href="../../services/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6-4.5-4.2 6.1-.7z"/></svg><span>Услуги</span></a><a href="../../#/bots"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4M9 13v2M15 13v2"/><circle cx="12" cy="3.5" r="1"/></svg><span>Боты</span></a><a href="https://t.me/intstagegroup" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg><span>Канал</span></a></nav>
+  <script type="module">
+    import { mount } from '../../app/js/interactive.js';
+    mount(document.getElementById('view'));
+  </script>
+</body>
+</html>
