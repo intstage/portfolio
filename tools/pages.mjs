@@ -102,7 +102,7 @@ export function renderPage(page, content, cases) {
   <title>${esc(page.title)}</title>
   <meta name="description" content="${esc(page.description)}">
   ${seoTags(page)}
-  <link rel="icon" href="${prefix}assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="${prefix}assets/brand/favicon-mark.png" type="image/png">
   <link rel="apple-touch-icon" href="${prefix}assets/brand/apple-touch-icon.png">
   <link rel="stylesheet" href="${prefix}app/styles.css">
 </head>
